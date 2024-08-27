@@ -12,7 +12,7 @@ class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     username = Column(String(120), nullable=False)
-    firtsname = Column(String(120), nullable=False)
+    firstname = Column(String(120), nullable=False)
     lastname = Column(String(120), nullable=False)
     email = Column(String(120), nullable=False)
 
@@ -31,12 +31,13 @@ class Comment(Base):
     author_id = Column(Integer, ForeignKey("user.id"), nullable=False)
     post_id = Column(Integer, ForeignKey("post.id"), nullable=False)
     users = relationship("User", backref="comment")
+    post = relationship("Post", backref="comment")
 
 class Post(Base):
     __tablename__ = 'post'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-    comments = relationship("Comments", backref="post")
+    comments = relationship("Comment", backref="post")
     users = relationship("User", backref="post")
 
 class Media(Base):
@@ -45,7 +46,7 @@ class Media(Base):
     type = Column(Enum("mp3", "mp4", "jpeg", "png"), nullable=False)
     url = Column(String(250), nullable=False)
     post_id = Column(Integer, ForeignKey("post.id"), nullable=False)
-    posts = relationship("User", backref="media")
+    posts = relationship("post", backref="media")
 
 
 # class Person(Base):
