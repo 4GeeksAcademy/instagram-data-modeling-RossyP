@@ -8,20 +8,7 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
-class User(Base):
-    __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
-    username = Column(String(120), nullable=False)
-    firstname = Column(String(120), nullable=False)
-    lastname = Column(String(120), nullable=False)
-    email = Column(String(120), nullable=False)
 
-class Follower(Base):
-    __tablename__ = 'follower'
-    id = Column(Integer, primary_key=True)
-    user_from_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-    user_to_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-    users = relationship("User", backref="follower")
 
 
 class Comment(Base):
@@ -47,6 +34,21 @@ class Media(Base):
     url = Column(String(250), nullable=False)
     post_id = Column(Integer, ForeignKey("post.id"), nullable=False)
     posts = relationship("post", backref="media")
+
+class User(Base):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(120), nullable=False)
+    firstname = Column(String(120), nullable=False)
+    lastname = Column(String(120), nullable=False)
+    email = Column(String(120), nullable=False)
+
+class Follower(Base):
+    __tablename__ = 'follower'
+    id = Column(Integer, primary_key=True)
+    user_from_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    user_to_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    users = relationship("User", backref="follower")
 
 
 # class Person(Base):
